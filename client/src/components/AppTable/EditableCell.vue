@@ -1,36 +1,14 @@
 <template>
-  <td class="cell" @dblclick.stop="openForm">
-    <span v-if="!isEditVisible"> {{ value }} </span>
-    <form v-else @submit.prevent="submitHandler">
-      <input v-model="newValue" type="text" @blur="submitHandler" />
-      <button>Save</button>
-    </form>
+  <td class="cell">
+    <input v-model.lazy="newValue" ref="input" type="text" />
   </td>
 </template>
 
 <script>
+import tableCell from '@/mixins/tablecell'
+
 export default {
-  props: {
-    row: Number,
-    col: Number,
-    value: null,
-  },
-  data() {
-    return {
-      isEditVisible: false,
-      newValue: '',
-    }
-  },
-  methods: {
-    openForm() {
-      this.newValue = this.value
-      this.isEditVisible = true
-    },
-    submitHandler() {
-      this.isEditVisible = false
-      this.$emit('change', this.row, this.col, this.newValue)
-    },
-  },
+  mixins: [tableCell],
 }
 </script>
 

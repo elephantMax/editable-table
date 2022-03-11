@@ -12,6 +12,8 @@
 <script>
 import AppTable from '@/components/AppTable'
 
+import { socket } from '@/socket'
+
 export default {
   name: 'App',
   components: {
@@ -38,13 +40,12 @@ export default {
       this.$store.commit('addKey', 'New key')
     },
   },
-  watch: {
-    table: {
-      handler() {
-        this.$store.dispatch('save')
-      },
-      deep: true,
-    },
+  async mounted() {
+    await this.$store.dispatch('fetchTable')
+
+    socket.on('update', async () => {
+      await this.$store.dispatch('fetchTable')
+    })
   },
 }
 </script>

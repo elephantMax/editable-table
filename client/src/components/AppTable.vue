@@ -15,7 +15,7 @@
 
     <tbody>
       <tr v-for="(value, rowIndex) in values" :key="rowIndex">
-        <td class="table__cell" @click="removeRow(rowIndex)">
+        <td class="table__cell" @dblclick="removeRow(rowIndex)">
           {{ rowIndex + 1 }}
         </td>
         <editable-cell
@@ -69,31 +69,6 @@ export default {
       this.$store.commit('removeRow', index)
     },
   },
-  // methods: {
-  //   changeCell(row, col, value) {
-  //     if (typeof row !== 'number') return
-  //     const newValues = JSON.parse(JSON.stringify([...this.values]))
-  //     newValues[row][col] = value
-  //     const newTable = { ...this.data, values: newValues }
-  //     this.$emit('updateTable', newTable)
-  //   },
-  //   changeHeaderCell(_, col, value) {
-  //     const newKeys = JSON.parse(JSON.stringify([...this.keys]))
-  //     newKeys[col] = value
-  //     const newTable = { ...this.data, keys: newKeys }
-  //     this.$emit('updateTable', newTable)
-  //   },
-  //   selectRow(index) {
-  //     this.selectedRow = index
-  //     this.$emit('selectRow', this.selectedRow)
-  //   },
-  //   removeCol(index) {
-  //     const keys = [...this.keys]
-  //     keys.splice(index, 1)
-  //     const newTable = { ...this.data, keys }
-  //     this.$emit('updateTable', newTable)
-  //   },
-  // },
 }
 </script>
 
@@ -112,14 +87,7 @@ export default {
     text-align: left;
     border: 1px solid black;
     padding: 10px;
-
-    &--number {
-      width: fit-content;
-    }
-  }
-
-  .selected {
-    background-color: #ccc;
+    position: relative;
   }
 }
 </style>

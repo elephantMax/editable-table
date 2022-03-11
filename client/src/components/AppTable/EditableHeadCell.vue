@@ -1,36 +1,25 @@
 <template>
-  <td class="cell" @dblclick.stop="openForm">
-    <span v-if="!isEditVisible"> {{ value }} </span>
-    <form v-else @submit.prevent="submitHandler">
-      <input v-model="newValue" type="text" @blur="submitHandler" />
-      <button>Save</button>
-      <button type="button" @click="removeCol">Remove</button>
-    </form>
+  <td class="cell">
+    <input
+      v-model.lazy="newValue"
+      ref="input"
+      type="text"
+      class="input"
+      @focus="isEditVisible = true"
+      @blur="isEditVisible = false"
+    />
+    <button v-if="isEditVisible" class="button" @mousedown="removeCol">
+      Remove
+    </button>
   </td>
 </template>
 
 <script>
+import tableCell from '@/mixins/tablecell'
+
 export default {
-  props: {
-    row: Number,
-    col: Number,
-    value: null,
-  },
-  data() {
-    return {
-      isEditVisible: false,
-      newValue: '',
-    }
-  },
+  mixins: [tableCell],
   methods: {
-    openForm() {
-      this.newValue = this.value
-      this.isEditVisible = true
-    },
-    submitHandler() {
-      this.isEditVisible = false
-      this.$emit('change', this.row, this.col, this.newValue)
-    },
     removeCol() {
       this.$store.commit('removeKey', this.col)
     },
@@ -43,5 +32,13 @@ export default {
   text-align: left;
   border: 1px solid black;
   padding: 10px;
+}
+
+.input {
+  color: #fff;
+}
+
+.button {
+  width: 100%;
 }
 </style>
