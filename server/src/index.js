@@ -38,7 +38,7 @@ httpServer.listen(config.port, async () => {
     socket.on('update', async (data) => {
       const { _id: id, ...table } = data
       await TableService.update(id, table)
-      socket.broadcast.emit('update', 'mess')
+      socket.broadcast.emit('update')
     })
     console.log('socket connected')
   })
